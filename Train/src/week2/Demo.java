@@ -46,7 +46,7 @@ public class Demo {
                 //一周内吃重复食物的次数不能超过5次
                 // 价格超过30元的所有食物的次数不能超过3次
                 while (statistic.get(randomFood) >= 5 ||
-                        (foods.get(index).getPrice() > 30 && priceBeyond30(oneWeekFood)>=3)){
+                        (randomFood.getPrice() > 30 && priceBeyond30(oneWeekFood)>=3)){
                     index = r.nextInt(foods.size());
                     randomFood = foods.get(index);
                 }
@@ -128,7 +128,7 @@ public class Demo {
             return count;
         }
 
-        /**
+       /**
         * 自己懒得想模板，就按师兄的来
         */
         public static String toString(List<Food> foods){
