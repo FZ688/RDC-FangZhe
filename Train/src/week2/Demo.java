@@ -34,21 +34,29 @@ public class Demo {
          */
         Map<Food,Integer> statistic = new HashMap<>();
         List<Food> oneWeekFood =  new ArrayList<>();
+        int exMoneyCount = 0;   //统计超过30元的食物的个数
         Random r = new Random();
         for (int i = 0; i < 14; i++) {
             //随机数决定吃什么
             int index = r.nextInt(foods.size());
             Food randomFood = foods.get(index);
             if (statistic.get(randomFood) == null){
+                //判断食物价格是否大于30元，计入exMoneyCount
+                if(randomFood.getPrice()>30){
+                    exMoneyCount++;
+                }
                 statistic.put(randomFood,1);
                 oneWeekFood.add(randomFood);
             }else {
                 //一周内吃重复食物的次数不能超过5次
                 // 价格超过30元的所有食物的次数不能超过3次
                 while (statistic.get(randomFood) >= 5 ||
-                        (randomFood.getPrice() > 30 && priceBeyond30(oneWeekFood)>=3)){
+                        (randomFood.getPrice() > 30 && exMoneyCount>=3)){
                     index = r.nextInt(foods.size());
                     randomFood = foods.get(index);
+                }
+                if (randomFood.getPrice()>30){
+                    exMoneyCount++;
                 }
                 statistic.put(randomFood,statistic.get(randomFood)+1);
                 oneWeekFood.add(randomFood);
@@ -114,19 +122,6 @@ public class Demo {
         });
 
     }
-
-        /**
-         *统计超过价格超过30元的食物的数量
-         */
-        public static int priceBeyond30(List<Food> foods){
-            int count = 0;
-            for (Food food : foods) {
-                if (food.getPrice() > 30){
-                    count++;
-                }
-            }
-            return count;
-        }
 
        /**
         * 自己懒得想模板，就按师兄的来
